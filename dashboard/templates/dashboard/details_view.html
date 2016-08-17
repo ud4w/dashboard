@@ -1,0 +1,15 @@
+{% extends "dashboard/base.html" %}
+{% load dashboard_extras %}
+
+{% block list %}
+{% details %}
+{% endblock %}
+
+{% block details %}
+    {% for name, value in object.get_fields %}
+        <p>
+            <label>{{ name }}:</label>
+            <span>{{ value|default:"Not available" }}</span>
+        </p>
+    {% endfor %}
+{% endblock %}

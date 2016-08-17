@@ -1,0 +1,57 @@
+{% extends "dashboard/base.html" %}
+{% load dashboard_extras %}
+
+{% block list %}
+{% clients_list %}
+{% endblock %}
+
+{% block table %}
+<h4 class="sub-header">Follow the link to get details</h4>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            {% for client in clients|slice:":1" %}
+            <tr>
+                <td>{% get_verbose_name client "client_name" %}</td>
+                <td>{% get_verbose_name client "client_price_per_day" %}</td>
+                <td>{% get_verbose_name client "client_discount_rate" %}</td>
+                <td>{% get_verbose_name client "client_addresses_quantity" %}</td>
+                <td>{% get_verbose_name client "created" %}</td>
+                <td>{% get_verbose_name client "updated" %}</td>
+            </tr>
+            {% endfor %}
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td><a href="{% url 'dashboard:client_detail' client.id %}">{{ client.client_name }}</a></td>
+                <td>{{ client.client_price_per_day }}</td>
+                <td>{{ client.client_discount_rate}}</td>
+                <td>{{ client.client_addresses_quantity }}</td>
+                <td>{{ client.created }}</td>
+                <td>{{ client.updated }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+          <th colspan="7" class="ts-pager form-horizontal">
+            <button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
+            <button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <button type="button" class="btn next"><i class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
+            <button type="button" class="btn last"><i class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
+            <select class="pagesize input-mini" title="Select page size">
+              <option selected="selected" value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+            </select>
+            <select class="pagenum input-mini" title="Select page number"></select>
+          </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+{% endblock %}
